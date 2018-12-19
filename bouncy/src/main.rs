@@ -1,6 +1,8 @@
 mod game;
 mod args;
 
+use std::process::exit;
+
 fn main() {
     let frame = match args::parse_args() {
         Ok(frame) => frame,
@@ -10,7 +12,7 @@ fn main() {
                 args::ParseError::TooFewArgs => println!("Too few arguments, must specify height and width."),
                 args::ParseError::TooManyArgs => println!("Too many arguments given.")
             }
-            return
+            exit(1)
         }
     };
     let mut game = game::Game::new(frame);
