@@ -5,6 +5,8 @@ pub enum ParseError {
     TooFewArgs,
     TooManyArgs,
     InvalidInteger(String),
+    WidthTooSmall(u32),
+    HeightTooSmall(u32),
 }
 
 struct ParseArgs(std::env::Args);
@@ -48,6 +50,14 @@ pub fn parse_args() -> Result<Frame, ParseError> {
     args.require_no_args()?;
     let height = parse_u32(height_str)?;
     let width = parse_u32(width_str)?;
+
+    if width < 2 {
+        return Err(ParseError::WidthTooSmall(width));
+    }
+    
+    if height < 2 {
+        return Err(ParseError::HeightTooSmall(height));
+    }
 
     Ok(Frame::new(height, width))
 }

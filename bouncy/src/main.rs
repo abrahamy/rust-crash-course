@@ -8,9 +8,11 @@ fn main() {
         Ok(frame) => frame,
         Err(e) => {
             match e {
-                args::ParseError::InvalidInteger(i) => println!("Invalid integer: {}", i),
                 args::ParseError::TooFewArgs => println!("Too few arguments, must specify height and width."),
-                args::ParseError::TooManyArgs => println!("Too many arguments given.")
+                args::ParseError::TooManyArgs => println!("Too many arguments given."),
+                args::ParseError::InvalidInteger(i) => println!("Invalid integer: {}", i),
+                args::ParseError::HeightTooSmall(h) => println!("Height {} is too small.", h),
+                args::ParseError::WidthTooSmall(w) => println!("Width {} is too small.", w)
             }
             exit(1)
         }
