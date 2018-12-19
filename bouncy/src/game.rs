@@ -100,7 +100,7 @@ impl Display for Game {
             for _ in 0..self.frame.width {
                 write!(fmt, "-")?;
             }
-            write!(fmt, "+\n")
+            writeln!(fmt, "+")
         };
         let print_row = |row: u32, fmt: &mut Formatter| {
             write!(fmt, "|").is_ok();
@@ -114,7 +114,7 @@ impl Display for Game {
                 write!(fmt, "{}", c).is_ok();
             }
 
-            write!(fmt, "|\n").is_ok();
+            writeln!(fmt, "|").is_ok();
         };
 
         top_bottom(fmt)?;
