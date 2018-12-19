@@ -1,16 +1,16 @@
 use std::fmt::{Display, Formatter};
 
-pub enum VerticalDirection {
+enum VerticalDirection {
     Up,
     Down,
 }
 
-pub enum HorizontalDirection {
+enum HorizontalDirection {
     Left,
     Right,
 }
 
-pub struct Position {
+struct Position {
     x: u32,
     y: u32,
 }
@@ -21,7 +21,7 @@ impl Position {
     }
 }
 
-pub struct Ball {
+struct Ball {
     pos: Position,
     vd: VerticalDirection,
     hd: HorizontalDirection,
@@ -59,13 +59,14 @@ impl Ball {
     }
 }
 
+#[derive(Debug)]
 pub struct Frame {
     height: u32,
     width: u32,
 }
 
 impl Frame {
-    fn new(height: u32, width: u32) -> Frame {
+    pub fn new(height: u32, width: u32) -> Frame {
         Frame { height, width }
     }
 }
@@ -76,9 +77,9 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new() -> Game {
+    pub fn new(frame: Frame) -> Game {
         Game {
-            frame: Frame::new(20, 120),
+            frame,
             ball: Ball::new(
                 Position::new(0, 0),
                 VerticalDirection::Up,
