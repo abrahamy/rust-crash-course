@@ -1,10 +1,9 @@
-pub mod schema;
-
 use self::schema::todos;
-use diesel::{self, Insertable, Queryable};
+use diesel::{pg::PgConnection, Insertable, Queryable};
+use rocket_contrib::database;
 
 #[database("dev")]
-pub struct Database(diesel::SqliteConnection);
+pub struct Database(PgConnection);
 
 #[derive(Debug, Queryable)]
 pub struct Todo {
@@ -23,5 +22,15 @@ pub struct NewTodo {
 impl NewTodo {
     pub fn new(name: String) -> NewTodo {
         NewTodo { name, done: false }
+    }
+}
+
+pub(crate) mod schema {
+    table! {
+        todos (id) {
+            id -> Integer,
+            name -> Text,
+            done -> Bool,
+        }
     }
 }

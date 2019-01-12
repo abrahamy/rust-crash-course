@@ -1,19 +1,19 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+#![feature(custom_attribute, decl_macro, proc_macro_hygiene, uniform_paths)]
 
 #[macro_use]
-extern crate rocket;
-#[macro_use]
-extern crate rocket_contrib;
-#[macro_use]
 extern crate diesel;
+#[macro_use]
+extern crate rocket;
 
 mod controllers;
 mod models;
 
-use self::controllers::todos;
+use controllers::TodoCtrl;
+use models::Database;
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![todos::list, todos::create])
+        .attach(Database::fairing())
+        .mount("/", routes![TodoCtrl::list, TodoCtrl::create])
         .launch();
 }
